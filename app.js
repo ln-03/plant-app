@@ -108,6 +108,13 @@ function initFilters() {
     collapseBelowDepth(currentTreeRoot, 2);
     updateTree(currentTreeRoot);
   });
+
+  document.getElementById("exportNotes").addEventListener("click", exportNotes);
+  document.getElementById("importNotes").addEventListener("click", () => {
+    document.getElementById("importNotesFile").click();
+  });
+  
+  document.getElementById("importNotesFile").addEventListener("change", importNotes);
 }
 
 function fillSelect(sel, values) {
@@ -587,6 +594,78 @@ async function loadINaturalistImages(name) {
     target.innerHTML =
       "<p class='small'>iNaturalist konnte nicht geladen werden.</p>";
   }
+}
+
+function exportNotes() {
+
+  const notes = loadNotes();
+
+  const exportObject = {
+    exported_at: new Date().toISOString(),
+    app: "plant-field-app",
+    notes: notes
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(exportObject, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+
+  const date = new Date().toISOString().slice(0, 10);
+
+  a.download = `plant_notes_${date}.json`;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
+
+function importNotes(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = e => {
+
+    try {
+
+      const imported = JSON.parse(e.target.result);
+
+      const importedNotes = imported.notes || imported;
+
+      const currentNotes = loadNotes();
+
+      const mergedNotes = {
+        ...currentNotes,
+        ...importedNotes
+      };
+
+      saveNotes(mergedNotes);
+
+      alert("Notizen wurden importiert.");
+
+    } catch (err) {
+
+      alert(
+        "Import fehlgeschlagen. Datei konnte nicht gelesen werden."
+      );
+    }
+  };
+
+  reader.readAsText(file);
 }
 
 loadData();
