@@ -1,0 +1,8 @@
+{
+  "name": "Plant Field App",
+  "short_name": "Plants",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f7f2",
+  "theme_color": "#234533"
+}

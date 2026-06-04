@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plant Field App</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Plant Field App</h1>
+      <p>Taxonomie, Plot-Filter, Bestimmungsmerkmale & Bilder</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="filters">
+      <h2>Filter</h2>
+
+      <label for="searchInput">Suche Taxon / Art</label>
+      <input id="searchInput" type="search" placeholder="z.B. Poa, Festuca, Carex..." />
+
+      <label for="exploFilter">Explo</label>
+      <select id="exploFilter">
+        <option value="">Alle</option>
+      </select>
+
+      <label for="plotFilter">Plot</label>
+      <select id="plotFilter">
+        <option value="">Alle</option>
+      </select>
+
+      <label for="familyFilter">Familie</label>
+      <select id="familyFilter">
+        <option value="">Alle</option>
+      </select>
+
+      <label for="rankFilter">Max. Rank 3-year list</label>
+      <select id="rankFilter">
+        <option value="">Alle</option>
+        <option value="5">Top 5</option>
+        <option value="10">Top 10</option>
+        <option value="14">Top 14</option>
+      </select>
+
+      <div class="button-row">
+        <button id="resetFilters">Reset</button>
+        <button id="expandAll">Alle öffnen</button>
+        <button id="collapseAll">Alle schließen</button>
+      </div>
+
+      <p id="matchCount" class="small"></p>
+    </aside>
+
+    <section class="tree-panel">
+      <div id="tree"></div>
+    </section>
+
+    <aside class="viewer" id="viewer">
+      <h2>Art auswählen</h2>
+      <p>Klicke im Baum auf eine Art, um Bilder und Merkmale zu sehen.</p>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
